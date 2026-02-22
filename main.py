@@ -23,14 +23,10 @@ class Product(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
     description = Column(Text)
-    ingredient = Column(Text)
+    ingredients = Column(Text)
 
 Base.metadata.create_all(bind = engine)
 
-class ProductCreate(BaseModel):
-    name: str
-    description: str
-    ingredients: str
 
 
 @app.post("/add_product")
@@ -44,7 +40,7 @@ def add_product(product: ProductCreate):
     new_product = Product(
         name = product.name,
         description = product.description,
-        ingredient = product.ingredient
+        ingredients = product.ingredients
     )
 
     db.add(new_product)
