@@ -30,8 +30,7 @@ Base.metadata.create_all(bind = engine)
 class ProductCreate(BaseModel):
     name: str
     description: str
-    ingredient: str
-
+    ingredients: str
 
 
 @app.post("/add_product")
@@ -56,8 +55,10 @@ def add_product(product: ProductCreate):
 @app.get("/product/{name}")
 def get_product(name: str):
     db = SessionLocal()
-    product = db.query(Product),filter(Product.name == name). first()
+
+    product = db.query(Product).filter(Product.name == name).first()
     db.close()
+
     if not product:
         return {"error": "Product not found"}
 
@@ -66,3 +67,6 @@ def get_product(name: str):
         "description": product.description,
         "ingredients": product.ingredients
     }
+@app.get("/test")
+def test():
+    return {"status": "ok"}
