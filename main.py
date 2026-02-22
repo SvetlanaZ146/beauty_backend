@@ -67,6 +67,3 @@ def get_product(name: str):
         "description": product.description,
         "ingredients": product.ingredients
     }
-@app.get("/test")
-def test():
-    return {"status": "ok"}
