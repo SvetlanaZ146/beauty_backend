@@ -35,7 +35,9 @@ class Product(Base):
 
 # Створення таблиці
 Base.metadata.create_all(bind=engine)
-
+@app.get("/")
+def root():
+    return {"message": "Beauty API is running"}
 # ---------------- POST ----------------
 @app.post("/add_product")
 def add_product(product: ProductCreate):
