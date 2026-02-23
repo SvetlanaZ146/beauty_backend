@@ -38,6 +38,16 @@ Base.metadata.create_all(bind=engine)
 @app.get("/")
 def root():
     return {"message": "Beauty API is running"}
+@app.get("/debug_db")
+def debug_db():
+    db = SessionLocal()
+    try:
+        products = db.query(Product).all()
+        return {"count": len(products)}
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        db.close()
 # ---------------- POST ----------------
 @app.post("/add_product")
 def add_product(product: ProductCreate):
