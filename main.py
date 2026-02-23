@@ -70,6 +70,17 @@ def add_product(product: ProductCreate):
     return {"status": "Product saved to database"}
 
 # ---------------- GET ----------------
+@app.get("/products")
+def get_all_products():
+    db = SessionLocal()
+    try:
+        products = db.query(Product).all()
+        return [
+            {"name": p.name, "description": p.description, "ingredients": p.ingredients}
+            for p in products
+        ]
+    finally:
+        db.close()
 @app.get("/product/{name}")
 def get_product(name: str):
     db = SessionLocal()
